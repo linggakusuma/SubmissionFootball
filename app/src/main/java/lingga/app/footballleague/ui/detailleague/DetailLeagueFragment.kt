@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.detail_league_fragment.*
+import lingga.app.footballleague.adapter.ViewPagerAdapter
 import lingga.app.footballleague.databinding.DetailLeagueFragmentBinding
 
 class DetailLeagueFragment : Fragment() {
@@ -26,5 +28,11 @@ class DetailLeagueFragment : Fragment() {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val pagerAdapter = ViewPagerAdapter(activity!!.supportFragmentManager, context)
+        viewPager.adapter = pagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
     }
 }

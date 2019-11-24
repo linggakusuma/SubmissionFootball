@@ -4,12 +4,20 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import lingga.app.footballleague.adapter.EventAdapter
 import lingga.app.footballleague.adapter.LeagueAdapter
+import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.model.League
 
 @BindingAdapter("list")
 fun recyclerView(recyclerView: RecyclerView, data: List<League>) {
     val adapter = recyclerView.adapter as LeagueAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listEvent")
+fun recyclerViewEvent(recyclerView: RecyclerView, data: List<Event>) {
+    val adapter = recyclerView.adapter as EventAdapter
     adapter.submitList(data)
 }
 
