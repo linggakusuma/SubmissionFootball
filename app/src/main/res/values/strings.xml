@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">FootballLeague</string>
+    <string name="formedyear">FormedYear :</string>
+    <string name="country">Country :</string>
+    <string name="first_event">First Event :</string>
+    <string name="last_match">Last Match</string>
+    <string name="next_match">Next Match</string>
+
+    <array name="club_image">
+        <item>@drawable/satu</item>
+        <item>@drawable/dua</item>
+        <item>@drawable/tiga</item>
+        <item>@drawable/empat</item>
+        <item>@drawable/lima</item>
+        <item>@drawable/enam</item>
+        <item>@drawable/tujuh</item>
+        <item>@drawable/delapan</item>
+        <item>@drawable/sembilan</item>
+        <item>@drawable/sepuluh</item>
+    </array>
+
+
+    <string-array name="club_name">
+        <item>English Premier League</item>
+        <item>French Ligue 1</item>
+        <item>German Bundesliga</item>
+        <item>Italian Serie A</item>
+        <item>Spanish La Liga</item>
+        <item>American Mayor League</item>
+        <item>Protugeuese Premiera Liga</item>
+        <item>Australian A League</item>
+        <item>Scotish Premier League</item>
+        <item>English League 1</item>
+    </string-array>
+
+    <string-array name="club_id">
+        <item>4328</item>
+        <item>4334</item>
+        <item>4331</item>
+        <item>4332</item>
+        <item>4335</item>
+        <item>4346</item>
+        <item>4344</item>
+        <item>4356</item>
+        <item>4330</item>
+        <item>4396</item>
+    </string-array>
+</resources>

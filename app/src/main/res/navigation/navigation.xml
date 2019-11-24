@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/leagueFragment">
+
+    <fragment
+        android:id="@+id/leagueFragment"
+        android:name="lingga.app.footballleague.ui.league.LeagueFragment"
+        android:label="LeagueFragment"
+        tools:layout="@layout/league_fragment">
+        <action
+            android:id="@+id/action_leagueFragment_to_detailLeagueFragment"
+            app:destination="@id/detailLeagueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailLeagueFragment"
+        android:name="lingga.app.footballleague.ui.detailleague.DetailLeagueFragment"
+        android:label="detail_league_fragment"
+        tools:layout="@layout/detail_league_fragment">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="league"
+            app:argType="lingga.app.footballleague.model.League" />
+    </fragment>
+</navigation>
