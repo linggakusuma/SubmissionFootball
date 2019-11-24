@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/leagueFragment"
         android:name="lingga.app.footballleague.ui.league.LeagueFragment"
-        android:label="LeagueFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/league_fragment">
         <action
             android:id="@+id/action_leagueFragment_to_detailLeagueFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/detailLeagueFragment"
         android:name="lingga.app.footballleague.ui.detailleague.DetailLeagueFragment"
-        android:label="detail_league_fragment"
+        android:label="{title}"
         tools:layout="@layout/detail_league_fragment">
         <argument
             android:name="title"

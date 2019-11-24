@@ -1,33 +1,30 @@
 package lingga.app.footballleague.ui.detailleague
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import lingga.app.footballleague.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import lingga.app.footballleague.databinding.DetailLeagueFragmentBinding
 
 class DetailLeagueFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = DetailLeagueFragment()
-    }
-
     private lateinit var viewModel: DetailLeagueViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.detail_league_fragment, container, false)
-    }
+        val binding = DetailLeagueFragmentBinding.inflate(inflater)
+        val detailLeague =
+            arguments?.let { DetailLeagueFragmentArgs.fromBundle(it).league.idLeague }
+        val viewModelFactory = detailLeague?.let { DetailLeagueViewModelFactory(it) }
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(DetailLeagueViewModel::class.java)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
+        return binding.root
+    }
 }
