@@ -34,7 +34,6 @@ class DetailLeagueViewModel(league: String) : ViewModel() {
             }
         }
     }
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
