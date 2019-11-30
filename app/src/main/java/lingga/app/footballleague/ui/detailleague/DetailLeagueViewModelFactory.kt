@@ -9,6 +9,6 @@ class DetailLeagueViewModelFactory(private val league: String) : ViewModelProvid
         if (modelClass.isAssignableFrom(DetailLeagueViewModel::class.java)) {
             return DetailLeagueViewModel(league) as T
         }
-        throw IllegalArgumentException("Unknown")
+        throw IllegalArgumentException("unknown")
     }
 }

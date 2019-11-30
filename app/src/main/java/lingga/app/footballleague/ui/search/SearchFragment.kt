@@ -1,4 +1,4 @@
-package lingga.app.footballleague.ui.league
+package lingga.app.footballleague.ui.search
 
 import android.app.SearchManager
 import android.content.Context
@@ -8,34 +8,32 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import lingga.app.footballleague.R
-import lingga.app.footballleague.adapter.LeagueAdapter
-import lingga.app.footballleague.databinding.LeagueFragmentBinding
+import lingga.app.footballleague.adapter.EventAdapter
+import lingga.app.footballleague.databinding.SearchFragmentBinding
 
-class LeagueFragment : Fragment() {
+class SearchFragment : Fragment() {
 
-    private lateinit var viewModel: LeagueViewModel
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = LeagueFragmentBinding.inflate(inflater)
+        val binding = SearchFragmentBinding.inflate(inflater)
+        val query = SearchFragmentArgs.fromBundle(arguments!!).quert
         val application = requireNotNull(this.activity).application
-        val leagueViewModelFactory = LeagueViewModelFactory(application)
-        viewModel =
-            ViewModelProviders.of(this, leagueViewModelFactory).get(LeagueViewModel::class.java)
+        val viewModelFactory = SearchViewModelFactory(query, application)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel::class.java)
 
-        binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.recyclerViewLeague.adapter = LeagueAdapter(LeagueAdapter.OnClickListener {
-
-            findNavController()
-                .navigate(
-                    LeagueFragmentDirections.actionLeagueFragmentToNavigation22(
-                        it.strLeague.toString(),
-                        it
-                    )
+        binding.lifecycleOwner = this
+        binding.recyclerViewSearch.adapter = EventAdapter(EventAdapter.OnClickListener {
+            findNavController().navigate(
+                SearchFragmentDirections.actionSearchFragmentToDetailMatchFragment2(
+                    it.idEvent.toString(),
+                    it.strEvent.toString()
                 )
+            )
         })
         setHasOptionsMenu(true)
         return binding.root
@@ -57,12 +55,7 @@ class LeagueFragment : Fragment() {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                findNavController()
-                    .navigate(
-                        LeagueFragmentDirections.actionLeagueFragmentToSearchFragment(
-                            query
-                        )
-                    )
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentSelf(query))
                 return true
             }
 

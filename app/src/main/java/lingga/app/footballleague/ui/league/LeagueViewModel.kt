@@ -6,7 +6,6 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Job
 import lingga.app.footballleague.R
 import lingga.app.footballleague.model.League
@@ -33,6 +32,7 @@ class LeagueViewModel(application: Application) : AndroidViewModel(application) 
         }
         return listLeague
     }
+
 
     override fun onCleared() {
         super.onCleared()

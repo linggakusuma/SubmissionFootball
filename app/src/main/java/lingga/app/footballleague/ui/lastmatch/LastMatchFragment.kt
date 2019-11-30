@@ -1,19 +1,18 @@
 package lingga.app.footballleague.ui.lastmatch
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import lingga.app.footballleague.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import lingga.app.footballleague.Navigation2Directions
+import lingga.app.footballleague.adapter.EventAdapter
+import lingga.app.footballleague.databinding.LastMatchFragmentBinding
+import lingga.app.footballleague.ui.nextmatch.NextMatchFragment
 
 class LastMatchFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = LastMatchFragment()
-    }
 
     private lateinit var viewModel: LastMatchViewModel
 
@@ -21,13 +20,24 @@ class LastMatchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.last_match_fragment, container, false)
-    }
+        val binding = LastMatchFragmentBinding.inflate(inflater)
+        val application = requireNotNull(this.activity).application
+        val id = arguments?.getString(NextMatchFragment.EXTRA_ID)
+        val viewModelFactory = LastMatchViewModelFactory(id!!, application)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(LastMatchViewModel::class.java)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(LastMatchViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        binding.recyclerViewEvent.adapter = EventAdapter(EventAdapter.OnClickListener {
+            findNavController().navigate(
+                Navigation2Directions.actionGlobalDetailMatchFragment2(
+                    it.idEvent.toString(),
+                    it.strEvent.toString()
+                )
+            )
+        })
 
+        return binding.root
+    }
 }

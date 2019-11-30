@@ -1,4 +1,4 @@
-package lingga.app.footballleague.ui.lastmatch
+package lingga.app.footballleague.ui.search
 
 import android.app.Application
 import android.view.View
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.network.LeagueApi
 
-class LastMatchViewModel(id: String, application: Application) : AndroidViewModel(application) {
+class SearchViewModel(query: String, application: Application) : AndroidViewModel(application) {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -24,17 +24,23 @@ class LastMatchViewModel(id: String, application: Application) : AndroidViewMode
     val status: LiveData<Int>
         get() = _status
 
+    private var _statusText = MutableLiveData<Int>()
+    val statusText: LiveData<Int>
+        get() = _statusText
+
+
     init {
-        getLastMatch(id)
+        getSearch(query)
     }
 
-    private fun getLastMatch(id: String) {
+    private fun getSearch(query: String) {
         coroutineScope.launch {
-            val getLastMatchDerred = LeagueApi.retrofitService.getLastMatchAsync(id)
+            val getSearchDeferred = LeagueApi.retrofitService.getSearchAsync(query)
             try {
                 _status.value = View.VISIBLE
-                val listEvent = getLastMatchDerred.await()
-                listEvent.events.forEach {
+                _statusText.value = View.GONE
+                val listSearch = getSearchDeferred.await()
+                listSearch.event.forEach {
                     val getTeamsHomeDeferred = LeagueApi.retrofitService.getTeamAsync(it.idHomeTeam)
                     val listTeam = getTeamsHomeDeferred.await()
                     it.homeTeamBadge = listTeam.teams[0].strTeamBadge
@@ -43,10 +49,13 @@ class LastMatchViewModel(id: String, application: Application) : AndroidViewMode
                     val listTeamAway = getTeamsAwayDeferred.await()
                     it.awayTeamBadge = listTeamAway.teams[0].strTeamBadge
                 }
-                _event.value = listEvent.events
+                _event.value = listSearch.event.filter {
+                    it.strSport.equals("Soccer")
+                }
                 _status.value = View.GONE
             } catch (e: Exception) {
                 _status.value = View.GONE
+                _statusText.value = View.VISIBLE
                 _event.value = arrayListOf()
             }
         }

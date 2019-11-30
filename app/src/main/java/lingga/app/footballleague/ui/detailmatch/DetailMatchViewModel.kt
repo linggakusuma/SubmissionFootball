@@ -1,10 +1,9 @@
-package lingga.app.footballleague.ui.lastmatch
+package lingga.app.footballleague.ui.detailmatch
 
-import android.app.Application
 import android.view.View
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -12,29 +11,43 @@ import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.network.LeagueApi
 
-class LastMatchViewModel(id: String, application: Application) : AndroidViewModel(application) {
+class DetailMatchViewModel(id: String) : ViewModel() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private var _event = MutableLiveData<List<Event>>()
-    val event: LiveData<List<Event>>
-        get() = _event
+    private var _detailMatch = MutableLiveData<Event>()
+    val detailMatch: LiveData<Event>
+        get() = _detailMatch
 
     private var _status = MutableLiveData<Int>()
     val status: LiveData<Int>
         get() = _status
 
+    private var _statusText = MutableLiveData<Int>()
+    val statusText: LiveData<Int>
+        get() = _statusText
+
+    private var _statusImage = MutableLiveData<Int>()
+    val statusImage: LiveData<Int>
+        get() = _statusImage
+
     init {
-        getLastMatch(id)
+        getDetailMatch(id)
     }
 
-    private fun getLastMatch(id: String) {
+    private fun getDetailMatch(id: String) {
         coroutineScope.launch {
-            val getLastMatchDerred = LeagueApi.retrofitService.getLastMatchAsync(id)
+            val getDetailMatchDeferred = LeagueApi.retrofitService.getDetailMatchAsync(id)
             try {
                 _status.value = View.VISIBLE
-                val listEvent = getLastMatchDerred.await()
-                listEvent.events.forEach {
+                _statusText.value = View.GONE
+                _statusImage.value = View.GONE
+                val listDetail = getDetailMatchDeferred.await()
+                val list = listDetail.events
+                _status.value = View.GONE
+                _statusText.value = View.VISIBLE
+                _statusImage.value = View.VISIBLE
+                list.forEach {
                     val getTeamsHomeDeferred = LeagueApi.retrofitService.getTeamAsync(it.idHomeTeam)
                     val listTeam = getTeamsHomeDeferred.await()
                     it.homeTeamBadge = listTeam.teams[0].strTeamBadge
@@ -43,11 +56,12 @@ class LastMatchViewModel(id: String, application: Application) : AndroidViewMode
                     val listTeamAway = getTeamsAwayDeferred.await()
                     it.awayTeamBadge = listTeamAway.teams[0].strTeamBadge
                 }
-                _event.value = listEvent.events
-                _status.value = View.GONE
+                _detailMatch.value = list[0]
             } catch (e: Exception) {
                 _status.value = View.GONE
-                _event.value = arrayListOf()
+                _statusText.value = View.VISIBLE
+                _statusImage.value = View.VISIBLE
+                _detailMatch.value = null
             }
         }
     }

@@ -7,6 +7,8 @@ import kotlinx.coroutines.Deferred
 import lingga.app.footballleague.BuildConfig
 import lingga.app.footballleague.model.ResponseEvent
 import lingga.app.footballleague.model.ResponseLeague
+import lingga.app.footballleague.model.ResponseSearchEvent
+import lingga.app.footballleague.model.ResponseTeams
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -33,6 +35,25 @@ interface LeagueApiService {
         @Query("id") id: String?
     ): Deferred<ResponseEvent>
 
+    @GET("eventspastleague.php?")
+    fun getLastMatchAsync(
+        @Query("id") id: String?
+    ): Deferred<ResponseEvent>
+
+    @GET("lookupteam.php?")
+    fun getTeamAsync(
+        @Query("id") id: String?
+    ): Deferred<ResponseTeams>
+
+    @GET("lookupevent.php")
+    fun getDetailMatchAsync(
+        @Query("id") id: String?
+    ): Deferred<ResponseEvent>
+
+    @GET("searchevents.php?")
+    fun getSearchAsync(
+        @Query("e") query: String?
+    ): Deferred<ResponseSearchEvent>
 }
 
 object LeagueApi {

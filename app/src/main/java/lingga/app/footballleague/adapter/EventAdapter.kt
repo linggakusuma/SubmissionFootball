@@ -1,13 +1,12 @@
 package lingga.app.footballleague.adapter
 
-import lingga.app.footballleague.databinding.ListEventBinding
-import lingga.app.footballleague.model.Event
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import lingga.app.footballleague.databinding.ListEventBinding
+import lingga.app.footballleague.model.Event
 
 class EventAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<Event, EventAdapter.EventViewHolder>(Diffcallback) {
