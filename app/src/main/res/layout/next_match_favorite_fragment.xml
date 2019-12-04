@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="lingga.app.footballleague.ui.league.LeagueViewModel" />
+            type="lingga.app.footballleague.ui.favorites.nextmatchfavorite.NextMatchFavoriteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,12 +15,12 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewLeague"
+            android:id="@+id/recyclerViewLastFavorite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:list="@{viewModel.league}"
-            app:spanCount="2"
-            tools:listitem="@layout/list_league" />
+            app:listFavorites="@{viewModel.lastFavorite}"
+            app:spanCount="1"
+            tools:listitem="@layout/list_event" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

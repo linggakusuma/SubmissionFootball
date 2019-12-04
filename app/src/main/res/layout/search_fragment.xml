@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,7 +20,8 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:listEvent="@{viewModel.event}"
-            app:spanCount="1" />
+            app:spanCount="1"
+            tools:listitem="@layout/list_event" />
 
         <ProgressBar
             android:id="@+id/progressBar4"
@@ -30,7 +32,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/recyclerViewSearch"
-            app:loadingProgress="@{viewModel.status}" />
+            app:loadingProgress="@{viewModel.status}"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/textNotFound"

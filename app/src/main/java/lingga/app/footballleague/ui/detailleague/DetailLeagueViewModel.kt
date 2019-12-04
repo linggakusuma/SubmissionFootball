@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.DetailLeague
 import lingga.app.footballleague.network.LeagueApi
 
-class DetailLeagueViewModel(league: String) : ViewModel() {
+class DetailLeagueViewModel(val league: String) : ViewModel() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -28,10 +28,10 @@ class DetailLeagueViewModel(league: String) : ViewModel() {
         get() = _statusText
 
     init {
-        getLeagueApi(league)
+        getLeagueApi()
     }
 
-    private fun getLeagueApi(league: String) {
+    private fun getLeagueApi() {
         coroutineScope.launch {
             val getDetailLeagueDeferred = LeagueApi.retrofitService.getDetailLeagueAsync(league)
             try {

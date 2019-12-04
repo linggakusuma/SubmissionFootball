@@ -13,8 +13,6 @@ data class Event(
     val intAwayScore: String?,
     val strHomeGoalDetails: String?,
     val strAwayGoalDetails: String?,
-    val intHomeShots: String?,
-    val intAwayShots: String?,
     var strHomeRedCards: String?,
     var strAwayRedCards: String?,
     var strHomeYellowCards: String?,

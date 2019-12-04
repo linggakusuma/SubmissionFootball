@@ -4,14 +4,13 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import lingga.app.footballleague.adapter.EventAdapter
+import lingga.app.footballleague.adapter.FavoritesAdapter
 import lingga.app.footballleague.adapter.LeagueAdapter
-import lingga.app.footballleague.adapter.ViewPagerAdapter
 import lingga.app.footballleague.model.Event
+import lingga.app.footballleague.model.Favorites
 import lingga.app.footballleague.model.League
 
 @BindingAdapter("list")
@@ -23,6 +22,12 @@ fun recyclerView(recyclerView: RecyclerView, data: List<League>) {
 @BindingAdapter("listEvent")
 fun recyclerViewEvent(recyclerView: RecyclerView, data: List<Event>?) {
     val adapter = recyclerView.adapter as EventAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listFavorites")
+fun recyclerViewFavorites(recyclerView: RecyclerView, data: List<Favorites>?) {
+    val adapter = recyclerView.adapter as FavoritesAdapter
     adapter.submitList(data)
 }
 

@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.network.LeagueApi
 
-class SearchViewModel(query: String, application: Application) : AndroidViewModel(application) {
+class SearchViewModel(private val query: String, application: Application) :
+    AndroidViewModel(application) {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -30,10 +31,10 @@ class SearchViewModel(query: String, application: Application) : AndroidViewMode
 
 
     init {
-        getSearch(query)
+        getSearch()
     }
 
-    private fun getSearch(query: String) {
+    private fun getSearch() {
         coroutineScope.launch {
             val getSearchDeferred = LeagueApi.retrofitService.getSearchAsync(query)
             try {

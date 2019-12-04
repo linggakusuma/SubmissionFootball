@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import lingga.app.footballleague.Navigation2Directions
 import lingga.app.footballleague.adapter.EventAdapter
 import lingga.app.footballleague.databinding.LastMatchFragmentBinding
+import lingga.app.footballleague.model.Favorites
 import lingga.app.footballleague.ui.nextmatch.NextMatchFragment
 
 class LastMatchFragment : Fragment() {
@@ -23,7 +24,7 @@ class LastMatchFragment : Fragment() {
         val binding = LastMatchFragmentBinding.inflate(inflater)
         val application = requireNotNull(this.activity).application
         val id = arguments?.getString(NextMatchFragment.EXTRA_ID)
-        val viewModelFactory = LastMatchViewModelFactory(id!!, application)
+        val viewModelFactory = id?.let { LastMatchViewModelFactory(it, application) }
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(LastMatchViewModel::class.java)
 
@@ -33,7 +34,8 @@ class LastMatchFragment : Fragment() {
             findNavController().navigate(
                 Navigation2Directions.actionGlobalDetailMatchFragment2(
                     it.idEvent.toString(),
-                    it.strEvent.toString()
+                    it.strEvent.toString(),
+                    Favorites.TYPE_LAST
                 )
             )
         })

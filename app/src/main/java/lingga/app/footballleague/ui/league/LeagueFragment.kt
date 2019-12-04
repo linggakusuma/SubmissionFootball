@@ -41,6 +41,7 @@ class LeagueFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_item, menu)
@@ -67,5 +68,12 @@ class LeagueFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.actionFavorites) {
+            findNavController().navigate(LeagueFragmentDirections.actionLeagueFragmentToFavoritesFragment())
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
