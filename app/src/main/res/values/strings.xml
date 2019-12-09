@@ -3,10 +3,6 @@
     <string name="formedyear">Formed Year :</string>
     <string name="country">Country :</string>
     <string name="first_event">First Event :</string>
-    <string name="goals">Goals</string>
-    <string name="statistik">Statistik</string>
-    <string name="shoot">Cards</string>
-    <string name="red_cards">Red Cards</string>
     <string name="lineup_players">Lineup Players</string>
     <string name="goalkeeper">Goal Keeper</string>
     <string name="defense">Defense</string>
@@ -14,8 +10,8 @@
     <string name="forward">Forward</string>
     <string name="search">Search</string>
     <string name="data_tidak_ditemukan">Data Tidak Ditemukan</string>
-    <string name="teams">Teams</string>
     <string name="favorites">Favorites</string>
+    <string name="anda_belum_menambahkan_daftar_favorit">Anda belum menambahkan daftar favorit</string>
 
     <array name="club_image">
         <item>@drawable/satu</item>

@@ -5,15 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.DetailLeague
 import lingga.app.footballleague.network.LeagueApi
+import lingga.app.footballleague.utils.CoroutineContextProvider
 
-class DetailLeagueViewModel(val league: String) : ViewModel() {
+class DetailLeagueViewModel(
+    val league: String,
+    val context: CoroutineContextProvider = CoroutineContextProvider()
+) : ViewModel() {
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(viewModelJob + context.main)
 
     private var _detail = MutableLiveData<DetailLeague>()
     val detail: LiveData<DetailLeague>
@@ -31,7 +34,7 @@ class DetailLeagueViewModel(val league: String) : ViewModel() {
         getLeagueApi()
     }
 
-    private fun getLeagueApi() {
+    fun getLeagueApi() {
         coroutineScope.launch {
             val getDetailLeagueDeferred = LeagueApi.retrofitService.getDetailLeagueAsync(league)
             try {

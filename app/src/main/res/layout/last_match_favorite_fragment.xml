@@ -22,5 +22,6 @@
             app:listFavorites="@{viewModel.lastFavorite}"
             app:spanCount="1"
             tools:listitem="@layout/list_event" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

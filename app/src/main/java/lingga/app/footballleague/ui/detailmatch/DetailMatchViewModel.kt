@@ -7,13 +7,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import lingga.app.footballleague.db.database
 import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.model.Favorites
 import lingga.app.footballleague.network.LeagueApi
+import lingga.app.footballleague.utils.CoroutineContextProvider
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
@@ -21,9 +21,12 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class DetailMatchViewModel(val id: String, val context: Context) : ViewModel() {
+class DetailMatchViewModel(
+    val id: String, val context: Context,
+    contextDispather: CoroutineContextProvider = CoroutineContextProvider()
+) : ViewModel() {
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(viewModelJob + contextDispather.main)
 
     private var _detailMatch = MutableLiveData<Event>()
     val detailMatch: LiveData<Event>
