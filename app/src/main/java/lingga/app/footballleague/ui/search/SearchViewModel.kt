@@ -6,16 +6,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.network.LeagueApi
+import lingga.app.footballleague.utils.CoroutineContextProvider
 
-class SearchViewModel(private val query: String, application: Application) :
+class SearchViewModel(
+    private val query: String, application: Application,
+    val context: CoroutineContextProvider = CoroutineContextProvider()
+) :
     AndroidViewModel(application) {
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(viewModelJob + context.main)
 
     private var _event = MutableLiveData<List<Event>>()
     val event: LiveData<List<Event>>
@@ -34,7 +37,7 @@ class SearchViewModel(private val query: String, application: Application) :
         getSearch()
     }
 
-    private fun getSearch() {
+    fun getSearch() {
         coroutineScope.launch {
             val getSearchDeferred = LeagueApi.retrofitService.getSearchAsync(query)
             try {

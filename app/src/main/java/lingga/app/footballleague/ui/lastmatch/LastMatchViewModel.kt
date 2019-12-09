@@ -6,15 +6,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.network.LeagueApi
+import lingga.app.footballleague.utils.CoroutineContextProvider
 
-class LastMatchViewModel(val id: String, application: Application) : AndroidViewModel(application) {
+class LastMatchViewModel(
+    val id: String, application: Application,
+    val context: CoroutineContextProvider = CoroutineContextProvider()
+) : AndroidViewModel(application) {
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(viewModelJob + context.main)
 
     private var _event = MutableLiveData<List<Event>>()
     val event: LiveData<List<Event>>
@@ -28,7 +31,7 @@ class LastMatchViewModel(val id: String, application: Application) : AndroidView
         getLastMatch()
     }
 
-    private fun getLastMatch() {
+    fun getLastMatch() {
         coroutineScope.launch {
             val getLastMatchDerred = LeagueApi.retrofitService.getLastMatchAsync(id)
             try {

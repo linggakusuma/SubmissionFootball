@@ -1,12 +1,11 @@
-@file:Suppress("IncorrectScope")
+package lingga.app.footballleague.ui.lastmatch
 
-package lingga.app.footballleague.ui.detailleague
-
+import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import lingga.app.footballleague.TestContextProvider
-import lingga.app.footballleague.model.ResponseLeague
+import lingga.app.footballleague.model.ResponseEvent
 import lingga.app.footballleague.network.LeagueApiService
 import org.junit.Before
 import org.junit.Rule
@@ -15,16 +14,18 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class DetailLeagueViewModelTest {
-
+class LastMatchViewModelTest {
     @Rule
     @JvmField
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var apiResponse: Deferred<ResponseLeague>
+    private lateinit var apiResponse: Deferred<ResponseEvent>
 
-    private lateinit var viewModel: DetailLeagueViewModel
+    @Mock
+    lateinit var application: Application
+
+    private lateinit var viewModel: LastMatchViewModel
 
     @Mock
     lateinit var service: LeagueApiService
@@ -32,14 +33,14 @@ class DetailLeagueViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        viewModel = DetailLeagueViewModel("4328", TestContextProvider())
+        viewModel = LastMatchViewModel("602285", application, TestContextProvider())
     }
 
     @Test
-    fun getDetailLeagueTest() {
+    fun getLastMatchTest() {
         runBlocking {
-            Mockito.`when`(service.getDetailLeagueAsync("4328")).thenReturn(apiResponse)
-            viewModel.getLeagueApi()
+            Mockito.`when`(service.getLastMatchAsync("602285")).thenReturn(apiResponse)
+            viewModel.getLastMatch()
         }
     }
 }

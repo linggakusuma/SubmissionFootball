@@ -22,7 +22,7 @@ import org.jetbrains.anko.toast
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class DetailMatchViewModel(
-    val id: String, val context: Context,
+    val id: String, val context: Context?,
     contextDispather: CoroutineContextProvider = CoroutineContextProvider()
 ) : ViewModel() {
     private var viewModelJob = Job()
@@ -53,7 +53,7 @@ class DetailMatchViewModel(
         favoriteState()
     }
 
-    private fun getDetailMatch() {
+    fun getDetailMatch() {
         coroutineScope.launch {
             val getDetailMatchDeferred = LeagueApi.retrofitService.getDetailMatchAsync(id)
             try {
@@ -85,7 +85,7 @@ class DetailMatchViewModel(
     }
 
     private fun favoriteState() {
-        context.database.use {
+        context?.database?.use {
             val favorite = select(Favorites.TABLE_FAVORITE).whereArgs(
                 "(ID_EVENT = {id})", "id" to id
             ).parseList(classParser<Favorites>())
@@ -95,7 +95,7 @@ class DetailMatchViewModel(
 
     fun addToFavorite(typeMatch: String) {
         try {
-            context.database.use {
+            context?.database?.use {
                 insert(
                     Favorites.TABLE_FAVORITE,
                     Favorites.ID_EVENT to _detailMatch.value?.idEvent,
@@ -112,13 +112,13 @@ class DetailMatchViewModel(
                 )
             }
         } catch (e: SQLiteConstraintException) {
-            context.toast(e.localizedMessage).show()
+            context?.toast(e.localizedMessage)?.show()
         }
     }
 
     fun removeFavorite() {
         try {
-            context.database.use {
+            context?.database?.use {
                 delete(
                     Favorites.TABLE_FAVORITE,
                     "(ID_EVENT = {id})",
@@ -126,7 +126,7 @@ class DetailMatchViewModel(
                 )
             }
         } catch (e: SQLiteConstraintException) {
-            context.toast(e.localizedMessage).show()
+            context?.toast(e.localizedMessage)?.show()
         }
     }
 }

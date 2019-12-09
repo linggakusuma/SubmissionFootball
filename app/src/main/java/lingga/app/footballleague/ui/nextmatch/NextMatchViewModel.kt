@@ -6,15 +6,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import lingga.app.footballleague.model.Event
 import lingga.app.footballleague.network.LeagueApi
+import lingga.app.footballleague.utils.CoroutineContextProvider
 
-class NextMatchViewModel(val id: String, application: Application) : AndroidViewModel(application) {
+class NextMatchViewModel(
+    val id: String,
+    application: Application,
+    val context: CoroutineContextProvider = CoroutineContextProvider()
+) : AndroidViewModel(application) {
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(viewModelJob + context.main)
 
     private var _event = MutableLiveData<List<Event>>()
     val event: LiveData<List<Event>>
@@ -28,7 +32,7 @@ class NextMatchViewModel(val id: String, application: Application) : AndroidView
         getNextMatch()
     }
 
-    private fun getNextMatch() {
+    fun getNextMatch() {
         coroutineScope.launch {
             val getNextMatchDeferred = LeagueApi.retrofitService.getNextMatchAsync(id)
             try {
