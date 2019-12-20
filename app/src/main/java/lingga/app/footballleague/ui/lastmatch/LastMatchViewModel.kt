@@ -19,13 +19,21 @@ class LastMatchViewModel(
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + context.main)
 
-    private var _event = MutableLiveData<List<Event>>()
-    val event: LiveData<List<Event>>
-        get() = _event
+    private var _eventLastMatch = MutableLiveData<List<Event>>()
+    val eventLastMatch: LiveData<List<Event>>
+        get() = _eventLastMatch
+
+    private var _eventNextMatch = MutableLiveData<List<Event>>()
+    val eventNextMatch: LiveData<List<Event>>
+        get() = _eventNextMatch
 
     private var _status = MutableLiveData<Int>()
     val status: LiveData<Int>
         get() = _status
+
+    private var _statusText = MutableLiveData<Int>()
+    val statusText: LiveData<Int>
+        get() = _statusText
 
     init {
         getLastMatch()
@@ -34,9 +42,12 @@ class LastMatchViewModel(
     fun getLastMatch() {
         coroutineScope.launch {
             val getLastMatchDerred = LeagueApi.retrofitService.getLastMatchAsync(id)
+            val getNextMatchDeffered = LeagueApi.retrofitService.getNextMatchAsync(id)
             try {
                 _status.value = View.VISIBLE
+                _statusText.value = View.INVISIBLE
                 val listEvent = getLastMatchDerred.await()
+                val listEventNext = getNextMatchDeffered.await()
                 listEvent.events.forEach {
                     val getTeamsHomeDeferred = LeagueApi.retrofitService.getTeamAsync(it.idHomeTeam)
                     val listTeam = getTeamsHomeDeferred.await()
@@ -46,11 +57,25 @@ class LastMatchViewModel(
                     val listTeamAway = getTeamsAwayDeferred.await()
                     it.awayTeamBadge = listTeamAway.teams[0].strTeamBadge
                 }
-                _event.value = listEvent.events
+
+                listEventNext.events.forEach {
+                    val getTeamsHomeDeferred = LeagueApi.retrofitService.getTeamAsync(it.idHomeTeam)
+                    val listTeam = getTeamsHomeDeferred.await()
+                    it.homeTeamBadge = listTeam.teams[0].strTeamBadge
+
+                    val getTeamsAwayDeferred = LeagueApi.retrofitService.getTeamAsync(it.idAwayTeam)
+                    val listTeamAway = getTeamsAwayDeferred.await()
+                    it.awayTeamBadge = listTeamAway.teams[0].strTeamBadge
+                }
+                _eventLastMatch.value = listEvent.events
+                _eventNextMatch.value = listEventNext.events
                 _status.value = View.GONE
+                _statusText.value = View.VISIBLE
             } catch (e: Exception) {
                 _status.value = View.GONE
-                _event.value = arrayListOf()
+                _statusText.value = View.GONE
+                _eventLastMatch.value = arrayListOf()
+                _eventNextMatch.value = arrayListOf()
             }
         }
     }

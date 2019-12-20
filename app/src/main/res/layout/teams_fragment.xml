@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="lingga.app.footballleague.ui.nextmatch.NextMatchViewModel" />
+            type="lingga.app.footballleague.ui.teams.TeamsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,24 +15,24 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewEvent"
+            android:id="@+id/recyclerViewTeams"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="90dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:listEvent="@{viewModel.event}"
+            app:listTeams="@{viewModel.teams}"
             app:spanCount="1"
-            tools:listitem="@layout/list_event" />
+            tools:listitem="@layout/list_teams" />
 
         <ProgressBar
-            android:id="@+id/progressBar4"
+            android:id="@+id/progressBar3"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/recyclerViewEvent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/recyclerViewEvent"
-            app:layout_constraintTop_toTopOf="@+id/recyclerViewEvent"
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewTeams"
+            app:layout_constraintTop_toTopOf="parent"
             app:loadingProgress="@{viewModel.status}"
             tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>

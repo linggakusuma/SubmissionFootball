@@ -57,18 +57,22 @@
                 android:name="league"
                 app:argType="lingga.app.footballleague.model.League" />
         </fragment>
-        <fragment
-            android:id="@+id/nextMatchFragment"
-            android:name="lingga.app.footballleague.ui.nextmatch.NextMatchFragment"
-            android:label="NextMatchFragment"
-            tools:layout="@layout/next_match_fragment" />
         <action
             android:id="@+id/action_global_detailMatchFragment2"
             app:destination="@id/detailMatchFragment2" />
         <fragment
             android:id="@+id/lastMatchFragment"
             android:name="lingga.app.footballleague.ui.lastmatch.LastMatchFragment"
-            android:label="LastMatchFragment" />
+            android:label="LastMatchFragment"
+            tools:layout="@layout/last_match_fragment" />
+        <fragment
+            android:id="@+id/teamsFragment"
+            android:name="lingga.app.footballleague.ui.teams.TeamsFragment"
+            android:label="TeamsFragment"
+            tools:layout="@layout/teams_fragment" />
+        <action
+            android:id="@+id/action_global_detailTeamFragment"
+            app:destination="@id/detailTeamFragment" />
     </navigation>
     <fragment
         android:id="@+id/searchFragment"
@@ -93,5 +97,17 @@
         <action
             android:id="@+id/action_favoritesFragment_to_detailMatchFragment2"
             app:destination="@id/detailMatchFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailTeamFragment"
+        android:name="lingga.app.footballleague.ui.detailteam.DetailTeamFragment"
+        android:label="{title}"
+        tools:layout="@layout/detail_team_fragment">
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 </navigation>

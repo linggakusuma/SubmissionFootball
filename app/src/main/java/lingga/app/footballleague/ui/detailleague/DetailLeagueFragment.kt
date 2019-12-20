@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.detail_league_fragment.*
 import lingga.app.footballleague.adapter.ViewPagerAdapter
 import lingga.app.footballleague.databinding.DetailLeagueFragmentBinding
-import lingga.app.footballleague.ui.nextmatch.NextMatchFragment
+import lingga.app.footballleague.ui.lastmatch.LastMatchFragment
 
 class DetailLeagueFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class DetailLeagueFragment : Fragment() {
             ViewModelProviders.of(this, viewModelFactory).get(DetailLeagueViewModel::class.java)
         val bundle = Bundle()
         bundle.putString(
-            NextMatchFragment.EXTRA_ID,
+            LastMatchFragment.EXTRA_ID,
             arguments?.let { DetailLeagueFragmentArgs.fromBundle(it).league.idLeague }
         )
         val pagerAdapter = ViewPagerAdapter(fragmentManager as FragmentManager, bundle)
@@ -44,7 +44,7 @@ class DetailLeagueFragment : Fragment() {
         super.onResume()
         val bundle = Bundle()
         bundle.putString(
-            NextMatchFragment.EXTRA_ID,
+            LastMatchFragment.EXTRA_ID,
             arguments?.let { DetailLeagueFragmentArgs.fromBundle(it).league.idLeague }
         )
         val pagerAdapter = ViewPagerAdapter(fragmentManager as FragmentManager, bundle)

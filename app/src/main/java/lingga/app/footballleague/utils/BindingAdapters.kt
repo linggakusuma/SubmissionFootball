@@ -3,15 +3,12 @@ package lingga.app.footballleague.utils
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import lingga.app.footballleague.adapter.EventAdapter
-import lingga.app.footballleague.adapter.FavoritesAdapter
-import lingga.app.footballleague.adapter.LeagueAdapter
-import lingga.app.footballleague.model.Event
-import lingga.app.footballleague.model.Favorites
-import lingga.app.footballleague.model.League
+import lingga.app.footballleague.adapter.*
+import lingga.app.footballleague.model.*
 
 @BindingAdapter("list")
 fun recyclerView(recyclerView: RecyclerView, data: List<League>) {
@@ -28,6 +25,18 @@ fun recyclerViewEvent(recyclerView: RecyclerView, data: List<Event>?) {
 @BindingAdapter("listFavorites")
 fun recyclerViewFavorites(recyclerView: RecyclerView, data: List<Favorites>?) {
     val adapter = recyclerView.adapter as FavoritesAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listStandings")
+fun recyclerViewStandings(recyclerView: RecyclerView, data: List<Standings>?) {
+    val adapter = recyclerView.adapter as StandingsAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listTeams")
+fun recyclerViewTeams(recyclerView: RecyclerView, data: List<Teams>?) {
+    val adapter = recyclerView.adapter as TeamsAdapter
     adapter.submitList(data)
 }
 
@@ -75,5 +84,12 @@ fun setHideTextView(textView: TextView, status: Int?) {
 fun setHideImage(imageView: ImageView, status: Int?) {
     status?.let {
         imageView.visibility = it
+    }
+}
+
+@BindingAdapter("hideCardView")
+fun setHideCardView(cardView: CardView, status: Int?) {
+    status?.let {
+        cardView.visibility = it
     }
 }

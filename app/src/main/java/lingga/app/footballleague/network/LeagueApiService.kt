@@ -5,10 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import lingga.app.footballleague.BuildConfig
-import lingga.app.footballleague.model.ResponseEvent
-import lingga.app.footballleague.model.ResponseLeague
-import lingga.app.footballleague.model.ResponseSearchEvent
-import lingga.app.footballleague.model.ResponseTeams
+import lingga.app.footballleague.model.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -54,6 +51,17 @@ interface LeagueApiService {
     fun getSearchAsync(
         @Query("e") query: String?
     ): Deferred<ResponseSearchEvent>
+
+    @GET("lookuptable.php?")
+    fun getStandingsAsync(
+        @Query("l") id: String?
+    ): Deferred<ResponseStandings>
+
+    @GET("lookup_all_teams.php?")
+    fun getAllTeamsAsync(
+        @Query("id") id: String?
+    ): Deferred<ResponseTeams>
+
 }
 
 object LeagueApi {

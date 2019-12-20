@@ -11,6 +11,16 @@
     <string name="search">Search</string>
     <string name="data_tidak_ditemukan">Data Tidak Ditemukan</string>
     <string name="favorites">Favorites</string>
+    <string name="played">P</string>
+    <string name="w">W</string>
+    <string name="d">D</string>
+    <string name="l">L</string>
+    <string name="t">T</string>
+    <string name="last_match">Last Match</string>
+    <string name="nextmatch">NextMatch</string>
+    <string name="stadium">Stadium :</string>
+    <string name="keyword">Keyword :</string>
+    <string name="capacity">Capacity :</string>
 
     <array name="club_image">
         <item>@drawable/satu</item>
