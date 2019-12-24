@@ -73,6 +73,12 @@
         <action
             android:id="@+id/action_global_detailTeamFragment"
             app:destination="@id/detailTeamFragment" />
+        <action
+            android:id="@+id/action_global_searchTeamsFragment"
+            app:destination="@id/searchTeamsFragment" />
+        <action
+            android:id="@+id/action_global_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </navigation>
     <fragment
         android:id="@+id/searchFragment"
@@ -88,6 +94,9 @@
         <action
             android:id="@+id/action_searchFragment_self"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -97,6 +106,9 @@
         <action
             android:id="@+id/action_favoritesFragment_to_detailMatchFragment2"
             app:destination="@id/detailMatchFragment2" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailTeamFragment"
+            app:destination="@id/detailTeamFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailTeamFragment"
@@ -109,5 +121,29 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <argument
+            android:name="favorite"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchTeamsFragment"
+        android:name="lingga.app.footballleague.ui.searchteams.SearchTeamsFragment"
+        android:label="Search Teams"
+        tools:layout="@layout/search_teams_fragment">
+        <argument
+            android:name="query"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchTeamsFragment_to_detailTeamFragment"
+            app:destination="@id/detailTeamFragment" />
+        <action
+            android:id="@+id/action_searchTeamsFragment_self"
+            app:destination="@id/searchTeamsFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchTeamsFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
 </navigation>

@@ -1,20 +1,19 @@
-package lingga.app.footballleague.ui.detailteam
+package lingga.app.footballleague.ui.favorites.teamsfavorite
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import lingga.app.footballleague.db.FavoriteDao
+import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
-class DetailTeamViewModelFactory(
-    private val id: String,
+class TeamsFavoriteViewModelFactory(
     private val dao: FavoriteDao,
     private val application: Application
-) :
-    ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailTeamViewModel::class.java)) {
-            return DetailTeamViewModel(id, dao, application) as T
+        if (modelClass.isAssignableFrom(TeamsFavoriteViewModel::class.java)) {
+            return TeamsFavoriteViewModel(dao, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel")
     }

@@ -32,11 +32,11 @@ class TeamsFragment : Fragment() {
             findNavController().navigate(
                 Navigation2Directions.actionGlobalDetailTeamFragment(
                     it.idTeam.toString(),
-                    it.strTeam.toString()
+                    it.strTeam.toString(),
+                    false
                 )
             )
         })
-
         return binding.root
     }
 

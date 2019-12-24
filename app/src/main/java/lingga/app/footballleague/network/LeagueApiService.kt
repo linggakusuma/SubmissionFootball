@@ -62,6 +62,10 @@ interface LeagueApiService {
         @Query("id") id: String?
     ): Deferred<ResponseTeams>
 
+    @GET("searchteams.php?")
+    fun getSearchTeamsAsync(
+        @Query("t") query: String?
+    ): Deferred<ResponseTeams>
 }
 
 object LeagueApi {

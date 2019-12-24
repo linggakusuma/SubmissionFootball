@@ -1,4 +1,4 @@
-package lingga.app.footballleague.ui.search
+package lingga.app.footballleague.ui.searchteams
 
 import android.app.SearchManager
 import android.content.Context
@@ -8,36 +8,41 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import lingga.app.footballleague.R
-import lingga.app.footballleague.adapter.EventAdapter
-import lingga.app.footballleague.databinding.SearchFragmentBinding
-import lingga.app.footballleague.model.Favorites
+import lingga.app.footballleague.adapter.TeamsAdapter
+import lingga.app.footballleague.databinding.SearchTeamsFragmentBinding
 
-class SearchFragment : Fragment() {
+class SearchTeamsFragment : Fragment() {
 
-    private lateinit var viewModel: SearchViewModel
+    private lateinit var viewModel: SearchTeamsViewModel
+    private lateinit var id: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = SearchFragmentBinding.inflate(inflater)
-        val query = arguments?.let { SearchFragmentArgs.fromBundle(it).quert }
+        val binding = SearchTeamsFragmentBinding.inflate(inflater)
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = query?.let { SearchViewModelFactory(it, application) }
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel::class.java)
+        id = arguments?.let { SearchTeamsFragmentArgs.fromBundle(it).id }.toString()
+        val query = arguments?.let { SearchTeamsFragmentArgs.fromBundle(it).query }
+        val viewModelFactory =
+            query?.let { SearchTeamsViewModelFactory(it, application, id) }
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(SearchTeamsViewModel::class.java)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.recyclerViewSearch.adapter = EventAdapter(EventAdapter.OnClickListener {
+        binding.recyclerViewSearchTeams.adapter = TeamsAdapter(TeamsAdapter.OnClickListener {
             findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToDetailMatchFragment2(
-                    it.idEvent.toString(),
-                    it.strEvent.toString(),
-                    Favorites.TYPE_LAST
+                SearchTeamsFragmentDirections.actionSearchTeamsFragmentToDetailTeamFragment(
+                    it.idTeam.toString(),
+                    it.strTeam.toString(),
+                    false
                 )
             )
         })
         setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -46,7 +51,7 @@ class SearchFragment : Fragment() {
         inflater.inflate(R.menu.menu_item, menu)
         val searchView =
             menu.findItem(R.id.search).actionView as androidx.appcompat.widget.SearchView
-        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
         searchView.isSubmitButtonEnabled = true
         searchView.setOnQueryTextListener(object :
@@ -57,15 +62,23 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentSelf(query))
+                findNavController()
+                    .navigate(
+                        SearchTeamsFragmentDirections.actionSearchTeamsFragmentSelf(
+                            query, id
+                        )
+                    )
+
                 return true
             }
+
         })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.actionFavorites) {
-            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToFavoritesFragment())
+            findNavController().navigate(SearchTeamsFragmentDirections.actionSearchTeamsFragmentToFavoritesFragment())
         }
         return super.onOptionsItemSelected(item)
     }
