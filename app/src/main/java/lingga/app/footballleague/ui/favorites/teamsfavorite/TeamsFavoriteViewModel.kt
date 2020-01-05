@@ -1,7 +1,6 @@
 package lingga.app.footballleague.ui.favorites.teamsfavorite
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Job
