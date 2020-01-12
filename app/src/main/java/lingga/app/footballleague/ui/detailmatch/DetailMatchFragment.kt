@@ -39,6 +39,7 @@ class DetailMatchFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.favorites_menu, menu)
         menuItem = menu

@@ -20,12 +20,6 @@
                 android:name="league"
                 app:argType="lingga.app.footballleague.model.League" />
         </action>
-        <action
-            android:id="@+id/action_leagueFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_leagueFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailMatchFragment2"
@@ -78,6 +72,12 @@
             app:destination="@id/searchTeamsFragment" />
         <action
             android:id="@+id/action_global_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_global_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_global_favoritesFragment2"
             app:destination="@id/favoritesFragment" />
     </navigation>
     <fragment

@@ -2,9 +2,7 @@ package lingga.app.footballleague.ui.favorites
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.fragment_favorites.*
@@ -21,6 +19,7 @@ class FavoritesFragment : Fragment() {
         val adapter = FavoritePagerAdapter(fragmentManager as FragmentManager)
         binding.viewPagerFavorites.adapter = adapter
         binding.tabLayoutFavorites.setupWithViewPager(binding.viewPagerFavorites)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -29,5 +28,10 @@ class FavoritesFragment : Fragment() {
         val adapter = FavoritePagerAdapter(fragmentManager as FragmentManager)
         viewPagerFavorites.adapter = adapter
         tabLayoutFavorites.setupWithViewPager(viewPagerFavorites)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

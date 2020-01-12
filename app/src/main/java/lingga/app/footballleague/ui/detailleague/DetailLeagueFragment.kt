@@ -1,9 +1,7 @@
 package lingga.app.footballleague.ui.detailleague
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
@@ -38,7 +36,6 @@ class DetailLeagueFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         setHasOptionsMenu(true)
-
         return binding.root
     }
 
@@ -52,5 +49,10 @@ class DetailLeagueFragment : Fragment() {
         val pagerAdapter = ViewPagerAdapter(fragmentManager as FragmentManager, bundle)
         viewPager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(viewPager)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }
